@@ -18,6 +18,5 @@ while email != "":
     email = input("Email: ")
 
 print()  # Blank line
-for i in email_to_name:
-    """Print all items in dictionary"""
-    print(f"{email_to_name[i]} ({i})")
+for email, name in email_to_name.items():
+    print(f"{name} ({email})")
