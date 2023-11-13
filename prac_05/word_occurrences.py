@@ -12,5 +12,3 @@ max_length = max((len(element) for element in text))  # get maximum length of wo
 for i in WORDS_TO_COUNT:
     """Print word and count with appropriate blank"""
     print(f"{i:{max_length}} : {WORDS_TO_COUNT[i]}")
-
-
