@@ -42,11 +42,11 @@ def main():
             print("Incomplete projects:")
             for project in projects:
                 if not project.is_complete():
-                    print(project)
+                    print(f"\t{project}")
             print("Completed projects:")
             for project in projects:
                 if project.is_complete():
-                    print(project)
+                    print(f"\t{project}")
 
 
 
@@ -65,10 +65,23 @@ def main():
 
 
         elif choice == "u":
-            pass
+            for i, project in enumerate(projects):
+                print(i, project)
+
+            update_choice = int(input("Project choice: "))
+            print(projects[update_choice])
+            new_percentage = int(input("New Percentage: "))
+            new_priority = input("New Priority: ")
+            if new_percentage != "":
+                projects[update_choice].completion = new_percentage
+            if new_priority != "":
+                projects[update_choice].priority = new_priority
+
+
+
         else:
             print("Invalid input")
-
+        print()
         print(MENU)
         choice = input(">>> ").lower()
 
