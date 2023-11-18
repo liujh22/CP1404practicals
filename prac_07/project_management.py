@@ -10,7 +10,9 @@ add new
  update project
 
 """
+import datetime
 from prac_07.project import Project
+
 
 MENU = ("- (L)oad projects \n- (S)ave projects\n- (D)isplay projects "
         "\n- (F)ilter projects by date\n- (A)dd new project \n- (U)pdate project\n- (Q)uit")
@@ -29,16 +31,13 @@ def main():
                 parts = line.strip().split("\t")
                 project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
                 projects.append(project)
-            projects = sorted(projects, key=lambda x: x.priority)
             in_file.close()
 
         elif choice == "s":
             pass
 
-
-
-
         elif choice == "d":
+            projects = sorted(projects, key=lambda x: x.priority)
             print("Incomplete projects:")
             for project in projects:
                 if not project.is_complete():
@@ -48,11 +47,14 @@ def main():
                 if project.is_complete():
                     print(f"\t{project}")
 
-
-
-
         elif choice == "f":
-            pass
+            projects = sorted(projects, key=lambda x: x.date)
+            filter_date = input("Show projects that start after date (dd/mm/yy): ")
+            filter_date = datetime.datetime.strptime(filter_date, "%d/%m/%Y").date()
+            for project in projects:
+                if project.date >= filter_date:
+                    print(project)
+
         elif choice == "a":
             print("Let's add a new project")
             name = input("Name: ")
@@ -63,11 +65,10 @@ def main():
             new_project = Project(name, date, priority, cost, completion)
             projects.append(new_project)
 
-
         elif choice == "u":
+            projects = sorted(projects, key=lambda x: x.name)
             for i, project in enumerate(projects):
                 print(i, project)
-
             update_choice = int(input("Project choice: "))
             print(projects[update_choice])
             new_percentage = int(input("New Percentage: "))
@@ -76,8 +77,6 @@ def main():
                 projects[update_choice].completion = new_percentage
             if new_priority != "":
                 projects[update_choice].priority = new_priority
-
-
 
         else:
             print("Invalid input")
