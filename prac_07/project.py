@@ -8,13 +8,12 @@ Record Music Video	01/12/2022	9	250000.0	0
 Read 7 Habits Book	13/12/2021	6	99.0	100
 
 """
-import datetime
 
 
 class Project:
     def __init__(self, name, date, priority, cost, completion):
         self.name = name
-        self.date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
+        self.date = date
         self.priority = priority
         self.cost = cost
         self.completion = completion
