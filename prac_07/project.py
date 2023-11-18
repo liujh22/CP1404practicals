@@ -18,6 +18,11 @@ class Project:
         self.cost = cost
         self.completion = completion
 
-    def
+    def is_complete(self):
+        return self.completion == 100
+
+    def __repr__(self):
+        return (f"  {self.name}, start: {self.date}, priority {self.priority},"
+                f" estimate: ${self.cost:.2f}, completion: {self.completion}%")
 
 
