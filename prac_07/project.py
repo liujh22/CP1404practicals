@@ -22,7 +22,7 @@ class Project:
         return self.completion == 100
 
     def __repr__(self):
-        return (f"{self.name}, start: {self.date}, priority {self.priority},"
-                f" estimate: ${self.cost:.2f}, completion: {self.completion}%")
+        return (f"{self.name:<25} start: {self.date:<20} Priority {self.priority:<10}"
+                f" Estimate: ${self.cost:<20.2f} Completion: {self.completion:>10}%")
 
 

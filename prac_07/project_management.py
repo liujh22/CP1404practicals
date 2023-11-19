@@ -42,6 +42,7 @@ def main():
             # sort before display
             sort_projects = sorted(projects, key=lambda x: x.priority)
             print_incomplete_projects(sort_projects)
+            print()
             print_complete_projects(sort_projects)
 
         # Filter Projects by Date
@@ -49,7 +50,7 @@ def main():
             # sort before filtering
             sort_projects = sorted(projects, key=lambda x: x.priority)
             filter_date = get_filter()
-            print_filtered(filter_date, projects, sort_projects)
+            print_filtered(filter_date, sort_projects)
 
         # Add new projects
         elif choice == "a":
@@ -72,11 +73,11 @@ def main():
     print("Thank you for using custom-built project management software.")
 
 
-def print_filtered(filter_date, projects, sort_projects):
+def print_filtered(filter_date, sort_projects):
     """comparing and filtering"""
-    for project in projects:
+    for project in sort_projects:
         if datetime.datetime.strptime(project.date, "%d/%m/%Y").date() >= filter_date:
-            print(sort_projects)
+            print(project)
 
 
 def get_filter():
