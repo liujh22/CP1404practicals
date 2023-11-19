@@ -1,13 +1,14 @@
 """
 Estimate Time: 1 hour
 
+Program to set and edit your projects!
 Menu:
 Load Project
-Save Projects
-Display
-Filter by date
-add new
- update project
+Save ...
+Display ...
+Filter ... by date
+Add new ...
+Update project ...
 
 """
 import datetime
@@ -20,18 +21,23 @@ FILENAME = "Projects.txt"
 
 
 def main():
+    """Main Menu"""
     projects = []
-    read_file(FILENAME, projects)
+    read_file(FILENAME, projects)  # Read "projects.txt" as default input
     print(MENU)
     choice = input(">>> ").lower()
     while choice != "q":
+
+        # Load Project
         if choice == "l":
             filename = input("File name: ")
             read_file(filename, projects)
 
+        # Save Project (Disabled)
         elif choice == "s":
             pass
 
+        # Display Projects
         elif choice == "d":
             sort_projects = sorted(projects, key=lambda x: x.priority)
             print("Incomplete projects:")
@@ -43,6 +49,7 @@ def main():
                 if project.is_complete():
                     print(f"\t{project}")
 
+        # Filter Projects by Date
         elif choice == "f":
             filter_date = input("Show projects that start after date (dd/mm/yy): ")
             filter_date = datetime.datetime.strptime(filter_date, "%d/%m/%Y").date()
@@ -50,28 +57,18 @@ def main():
                 if datetime.datetime.strptime(project.date, "%d/%m/%Y").date() >= filter_date:
                     print(project)
 
+        # Add new projects
         elif choice == "a":
             print("Let's add a new project")
-            name = input("Name: ")
-            date = input("Start date (dd/mm/yy): ")
-            priority = int(input("Priority: "))
-            cost = int(input("Cost estimate: $"))
-            completion = int(input("Percent complete: "))
-            new_project = Project(name, date, priority, cost, completion)
+            new_project = create_project()
             projects.append(new_project)
 
+        # Update existed Project
         elif choice == "u":
-            for i, project in enumerate(projects):
-                print(i, project)
-            update_choice = int(input("Project choice: "))
-            print(projects[update_choice])
-            new_percentage = int(input("New Percentage: "))
-            new_priority = int(input("New Priority: "))
-            if new_percentage != "":
-                projects[update_choice].completion = new_percentage
-            if new_priority != "":
-                projects[update_choice].priority = new_priority
+            print_index(projects)
+            collect_changes(projects)
 
+        # Unexpected choices
         else:
             print("Invalid input")
         print()
@@ -81,14 +78,45 @@ def main():
     print("Thank you for using custom-built project management software.")
 
 
+def collect_changes(projects):
+    """gather valid changes"""
+    update_choice = int(input("Project choice: "))
+    print(projects[update_choice])
+    new_percentage = int(input("New Percentage: "))
+    new_priority = int(input("New Priority: "))
+    if new_percentage != "":
+        projects[update_choice].completion = new_percentage
+    if new_priority != "":
+        projects[update_choice].priority = new_priority
+
+
+def print_index(projects):
+    """Print projects' index and content"""
+    for i, project in enumerate(projects):
+        print(i, project)
+
+
+def create_project():
+    """Gather information for new project"""
+    name = input("Name: ")
+    date = input("Start date (dd/mm/yy): ")
+    priority = int(input("Priority: "))
+    cost = int(input("Cost estimate: $"))
+    completion = int(input("Percent complete: "))
+    new_project = Project(name, date, priority, cost, completion)
+    return new_project
+
+
 def read_file(filename, projects):
-    in_file = open(filename, 'r')
-    in_file.readline()
-    for line in in_file:
-        parts = line.strip().split("\t")
-        project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
-        projects.append(project)
-    in_file.close()
+    """read file and add projects to list"""
+    with open(filename) as in_file:
+        in_file.readline()
+    # Each line is a project
+        for line in in_file:
+            parts = line.strip().split("\t")
+            # Name, Start Date, Priority, Cost Estimate, Completion Percentage
+            project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
+            projects.append(project)
 
 
 main()
