@@ -33,3 +33,7 @@ class Car:
 
     def __str__(self):
         return f"{self.name}, fuel={self.fuel}, odo={self._odometer}"
+
+    @property
+    def odometer(self):
+        return self._odometer
